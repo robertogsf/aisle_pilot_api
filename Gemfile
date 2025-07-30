@@ -46,9 +46,9 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 
   # Rspec
-  gem 'rspec-rails'
-  gem 'factory_bot_rails'
-  gem 'faker'
+  gem "rspec-rails"
+  gem "factory_bot_rails"
+  gem "faker"
 end
 
 gem "jwt", "~> 3.1"
