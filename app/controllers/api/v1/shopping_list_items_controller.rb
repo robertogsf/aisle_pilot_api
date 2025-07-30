@@ -36,7 +36,7 @@ class Api::V1::ShoppingListItemsController < ApplicationController
 
   def set_shopping_list
     @shopping_list = current_user.shopping_lists.find_by(id: params[:shopping_list_id])
-    return render json: { error: "Shopping list not found" }, status: :not_found unless @shopping_list
+    render json: { error: "Shopping list not found" }, status: :not_found unless @shopping_list
   end
 
   def item_response(item)
