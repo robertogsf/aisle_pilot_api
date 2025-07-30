@@ -3,7 +3,7 @@ Store.destroy_all
 Product.destroy_all
 StoreProduct.destroy_all
 
-jennifer = User.create(name: "Jennifer Beaver", email:"jen.lee.beaver@gmail.com", password: "hello101")
+jennifer = User.create(name: "Jennifer Beaver", email: "jen.lee.beaver@gmail.com", password: "hello101")
 
 # Clear existing data
 Store.destroy_all
