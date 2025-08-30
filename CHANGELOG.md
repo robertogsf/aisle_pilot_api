@@ -14,15 +14,15 @@ The format is based on Keep a Changelog and this project adheres to Semantic Ver
 
 <!-- When releasing, move items above into a new section, e.g. `## [0.1.0] - YYYY-MM-DD` -->
 
-## [0.1.1] - 2025-08-25
+## [1.1.0] - 2025-08-25
 
 ### Added
-- Request specs para Shopping Lists (index, create, show, update, delete).
-- Request spec para Shopping List Items destroy.
-- Request specs extra para Products: show y filtro por store_id.
+- Request specs for Shopping Lists (index, create, show, update, delete).
+- Request spec for Shopping List Items destroy.
+- Additional request specs for Products: show and filter by store_id.
 
 ### Changed
-- Implementado `ProductsController#show` para GET /api/v1/products/:id.
+- Implemented `ProductsController#show` for GET /api/v1/products/:id.
 
 ## [0.1.0] - 2025-08-25
 

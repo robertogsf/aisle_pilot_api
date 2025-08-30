@@ -37,8 +37,8 @@ module Api
 
       # DELETE /api/v1/shopping_lists/:id
       def destroy
-        @shopping_list.destroy
-        head :no_content
+      @shopping_list.destroy
+      render json: { message: "Shopping lists deleted" }, status: :ok
       end
 
       private

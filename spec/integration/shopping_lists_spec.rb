@@ -18,7 +18,11 @@ RSpec.describe 'Shopping Lists', type: :request do
         let!(:store) { Store.create!(name: 'Test Store') }
         let!(:list1) { ShoppingList.create!(user: user, store: store, name: 'Weekly') }
 
-        run_test!
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data).to be_an(Array)
+          expect(data.first).to include('id', 'name', 'store_id')
+        end
       end
     end
 
@@ -47,7 +51,12 @@ RSpec.describe 'Shopping Lists', type: :request do
         let!(:store) { Store.create!(name: 'Store A') }
         let(:shopping_list) { { name: 'Party', store_id: store.id } }
 
-        run_test!
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(response.code.to_i).to eq(201)
+          expect(data).to be_a(Hash)
+          expect(data).to include('id', 'name', 'store_id')
+        end
       end
     end
   end
@@ -71,7 +80,12 @@ RSpec.describe 'Shopping Lists', type: :request do
         let!(:list) { ShoppingList.create!(user: user, store: store, name: 'Groceries') }
         let(:id) { list.id }
 
-        run_test!
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(response.code.to_i).to eq(200)
+          expect(data).to be_a(Hash)
+          expect(data).to include('id', 'name', 'store_id')
+        end
       end
     end
 
@@ -100,7 +114,12 @@ RSpec.describe 'Shopping Lists', type: :request do
         let(:id) { list.id }
         let(:shopping_list) { { name: 'Renamed' } }
 
-        run_test!
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(response.code.to_i).to eq(200)
+          expect(data).to be_a(Hash)
+          expect(data).to include('id', 'name', 'store_id')
+        end
       end
     end
 
@@ -109,7 +128,7 @@ RSpec.describe 'Shopping Lists', type: :request do
       produces 'application/json'
       security [ bearer_auth: [] ]
 
-      response '204', 'list deleted' do
+      response '200', 'list deleted' do
         let!(:user) { User.create!(email: 'sld@example.com', password: 'password123', password_confirmation: 'password123') }
         let(:Authorization) do
           secret = Rails.application.credentials.jwt_secret.presence || ENV['JWT_SECRET']
@@ -119,8 +138,10 @@ RSpec.describe 'Shopping Lists', type: :request do
         let!(:store) { Store.create!(name: 'Store D') }
         let!(:list) { ShoppingList.create!(user: user, store: store, name: 'Temp') }
         let(:id) { list.id }
-
-        run_test!
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data['message']).to eq('Shopping lists deleted')
+        end
       end
     end
   end
