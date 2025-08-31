@@ -7,7 +7,14 @@ The format is based on Keep a Changelog and this project adheres to Semantic Ver
 ## [Unreleased]
 
 ### Added
-- Additional request specs (pending) as new endpoints are implemented.
+- Store search by zip code endpoint: GET /api/v1/stores?zip_code=12345 (BACKND001)
+- Optimized shopping order endpoint: GET /api/v1/shopping_lists/:id/optimized_order
+- Request specs for new store zip code search functionality
+- Request specs for optimized shopping order endpoint
+
+### Changed
+- Enhanced StoresController#index to support zip code filtering
+- Implemented ShoppingListsController#optimized_order method
 
 ### Chores
 - TBD
