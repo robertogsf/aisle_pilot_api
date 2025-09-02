@@ -1,35 +1,56 @@
-class Api::V1::ShoppingListsController < ApplicationController
-  # before_action :authorize_user
+module Api
+  module V1
+    class ShoppingListsController < ApplicationController
+      before_action :authorize_user
+      before_action :set_shopping_list, only: [ :show, :update, :destroy ]
 
-  def index
-    @lists = current_user.shopping_lists
-    render json: @lists
-  end
+      # GET /api/v1/shopping_lists
+      def index
+        @shopping_lists = current_user.shopping_lists
+        render json: @shopping_lists
+      end
 
-  def create
-    @list = current_user.shopping_lists.create!(shopping_list_params)
-    render json: @list, status: :created
-  end
+      # GET /api/v1/shopping_lists/:id
+      def show
+        render json: @shopping_list
+      end
 
-  def optimized_order
-    list = current_user.shopping_lists.find(params[:id])
-    store = list.store
+      # POST /api/v1/shopping_lists
+      def create
+        @shopping_list = current_user.shopping_lists.build(shopping_list_params)
 
-    items = list.shopping_list_items.includes(:product)
-    layout = store.layout
+        if @shopping_list.save
+          render json: @shopping_list, status: :created
+        else
+          render json: { errors: @shopping_list.errors.full_messages }, status: :unprocessable_entity
+        end
+      end
 
-    # Example sort: by aisle number (assuming layout includes aisle data)
-    sorted_items = items.sort_by do |item|
-      store_product = StoreProduct.find_by(store: store, product: item.product)
-      store_product&.aisle.to_i || 999
+      # PATCH/PUT /api/v1/shopping_lists/:id
+      def update
+        if @shopping_list.update(shopping_list_params)
+          render json: @shopping_list
+        else
+          render json: { errors: @shopping_list.errors.full_messages }, status: :unprocessable_entity
+        end
+      end
+
+      # DELETE /api/v1/shopping_lists/:id
+      def destroy
+        @shopping_list.destroy
+        head :no_content
+      end
+
+      private
+
+      def set_shopping_list
+        @shopping_list = current_user.shopping_lists.find_by(id: params[:id])
+        render json: { error: "Not Found" }, status: :not_found unless @shopping_list
+      end
+
+      def shopping_list_params
+        params.require(:shopping_list).permit(:name, :store_id, :notes)
+      end
     end
-
-    render json: sorted_items
-  end
-
-  private
-
-  def shopping_list_params
-    params.require(:shopping_list).permit(:name, :store_id)
   end
 end

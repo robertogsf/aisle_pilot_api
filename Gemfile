@@ -44,6 +44,11 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  # Rspec
+  gem "rspec-rails"
+  gem "factory_bot_rails"
+  gem "faker"
 end
 
 gem "jwt", "~> 3.1"
@@ -51,3 +56,6 @@ gem "jwt", "~> 3.1"
 gem "bcrypt", "~> 3.1"
 
 gem "pry", "~> 0.15.2"
+
+# Swagger
+gem "rswag"

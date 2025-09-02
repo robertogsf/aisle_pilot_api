@@ -1,0 +1,120 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+components:
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+paths:
+  "/api/v1/register":
+    post:
+      summary: Register a new user
+      tags:
+      - Auth
+      parameters: []
+      responses:
+        '201':
+          description: user registered
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              - email
+              - password
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+  "/api/v1/login":
+    post:
+      summary: Login a user
+      tags:
+      - Auth
+      parameters: []
+      responses:
+        '200':
+          description: login successful
+        '401':
+          description: invalid credentials
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - email
+              - password
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+  "/api/v1/products":
+    get:
+      summary: List all products
+      tags:
+      - Products
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: products found
+  "/api/v1/shopping_lists/{id}/shopping_list_items":
+    post:
+      summary: Add item to shopping list
+      tags:
+      - ShoppingListItems
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: item added
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - product_id
+              - quantity
+              properties:
+                product_id:
+                  type: integer
+                quantity:
+                  type: integer
+  "/api/v1/stores":
+    get:
+      summary: List all stores
+      tags:
+      - Stores
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: stores listed
