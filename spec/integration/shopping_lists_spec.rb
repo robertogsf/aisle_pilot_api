@@ -7,14 +7,13 @@ RSpec.describe 'Shopping Lists', type: :request do
       produces 'application/json'
       security [ bearer_auth: [] ]
 
-      response '200', 'lists found' do
+      response '200', 'shopping lists found' do
         let!(:user) { User.create!(email: 'sl@example.com', password: 'password123', password_confirmation: 'password123') }
         let(:Authorization) do
           secret = Rails.application.credentials.jwt_secret.presence || ENV['JWT_SECRET']
           token = JWT.encode({ user_id: user.id }, secret, 'HS256')
           "Bearer #{token}"
         end
-
         let!(:store) { Store.create!(name: 'Test Store') }
         let!(:list1) { ShoppingList.create!(user: user, store: store, name: 'Weekly') }
 
@@ -41,7 +40,7 @@ RSpec.describe 'Shopping Lists', type: :request do
         }
       }
 
-      response '201', 'list created' do
+      response '201', 'Shopping list created' do
         let!(:user) { User.create!(email: 'slc@example.com', password: 'password123', password_confirmation: 'password123') }
         let(:Authorization) do
           secret = Rails.application.credentials.jwt_secret.presence || ENV['JWT_SECRET']
@@ -69,7 +68,7 @@ RSpec.describe 'Shopping Lists', type: :request do
       produces 'application/json'
       security [ bearer_auth: [] ]
 
-      response '200', 'list shown' do
+      response '200', 'Shopping list shown' do
         let!(:user) { User.create!(email: 'sls@example.com', password: 'password123', password_confirmation: 'password123') }
         let(:Authorization) do
           secret = Rails.application.credentials.jwt_secret.presence || ENV['JWT_SECRET']
@@ -89,7 +88,7 @@ RSpec.describe 'Shopping Lists', type: :request do
       end
     end
 
-    patch 'Update a shopping list' do
+    patch 'Update a Shopping list' do
       tags 'ShoppingLists'
       consumes 'application/json'
       produces 'application/json'
@@ -102,7 +101,7 @@ RSpec.describe 'Shopping Lists', type: :request do
         }
       }
 
-      response '200', 'list updated' do
+      response '200', 'Shopping list updated' do
         let!(:user) { User.create!(email: 'slu@example.com', password: 'password123', password_confirmation: 'password123') }
         let(:Authorization) do
           secret = Rails.application.credentials.jwt_secret.presence || ENV['JWT_SECRET']
@@ -112,18 +111,19 @@ RSpec.describe 'Shopping Lists', type: :request do
         let!(:store) { Store.create!(name: 'Store C') }
         let!(:list) { ShoppingList.create!(user: user, store: store, name: 'Initial') }
         let(:id) { list.id }
-        let(:shopping_list) { { name: 'Renamed' } }
+        let(:shopping_list) { { name: 'Shopping list renamed' } }
 
         run_test! do |response|
           data = JSON.parse(response.body)
           expect(response.code.to_i).to eq(200)
           expect(data).to be_a(Hash)
           expect(data).to include('id', 'name', 'store_id')
+          expect(data['name']).to eq('Shopping list renamed')
         end
       end
     end
 
-    delete 'Delete a shopping list' do
+    delete 'Delete a Shopping list' do
       tags 'ShoppingLists'
       produces 'application/json'
       security [ bearer_auth: [] ]

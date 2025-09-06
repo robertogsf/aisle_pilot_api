@@ -12,7 +12,7 @@ class Api::V1::StoresController < ApplicationController
     else
       stores = Store.all
     end
-    
+
     render json: stores.map { |store| store_response(store) }, status: :ok
   end
 

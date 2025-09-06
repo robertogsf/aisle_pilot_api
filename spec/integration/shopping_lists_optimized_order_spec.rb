@@ -7,7 +7,7 @@ RSpec.describe 'Shopping Lists Optimized Order', type: :request do
     get 'Get optimized shopping order for a list' do
       tags 'ShoppingLists'
       produces 'application/json'
-      security [bearer_auth: []]
+      security [ bearer_auth: [] ]
 
       response '200', 'optimized shopping order' do
         let!(:user) { User.create!(email: 'optimized@example.com', password: 'password123', password_confirmation: 'password123') }
@@ -21,16 +21,16 @@ RSpec.describe 'Shopping Lists Optimized Order', type: :request do
         let!(:product1) { Product.create!(name: 'Bananas', category: 'Produce', brand: 'Dole', image_url: 'test.jpg') }
         let!(:product2) { Product.create!(name: 'Milk', category: 'Dairy', brand: 'Great Value', image_url: 'test.jpg') }
         let!(:product3) { Product.create!(name: 'Bread', category: 'Bakery', brand: 'Wonder', image_url: 'test.jpg') }
-        
+
         let!(:store_product1) { StoreProduct.create!(store: store, product: product1, aisle: '1', location: { shelf: 1, bin: 1 }, price: 2.99) }
         let!(:store_product2) { StoreProduct.create!(store: store, product: product2, aisle: '2', location: { shelf: 2, bin: 1 }, price: 3.49) }
         let!(:store_product3) { StoreProduct.create!(store: store, product: product3, aisle: '4', location: { shelf: 1, bin: 3 }, price: 2.49) }
-        
+
         let!(:shopping_list) { ShoppingList.create!(user: user, store: store, name: 'Test List') }
         let!(:item1) { ShoppingListItem.create!(shopping_list: shopping_list, product: product1, quantity: 2, notes: 'Ripe ones') }
         let!(:item2) { ShoppingListItem.create!(shopping_list: shopping_list, product: product2, quantity: 1) }
         let!(:item3) { ShoppingListItem.create!(shopping_list: shopping_list, product: product3, quantity: 1, notes: 'Whole wheat') }
-        
+
         let(:id) { shopping_list.id }
 
         run_test! do |response|
@@ -41,10 +41,10 @@ RSpec.describe 'Shopping Lists Optimized Order', type: :request do
           expect(data['store_name']).to eq('Test Store')
           expect(data['optimized_items']).to be_a(Array)
           expect(data['optimized_items'].length).to eq(3)
-          
+
           # Verify items are sorted by aisle (1, 2, 4)
           aisles = data['optimized_items'].map { |item| item['aisle'] }
-          expect(aisles).to eq(['1', '2', '4'])
+          expect(aisles).to eq([ '1', '2', '4' ])
         end
       end
 
