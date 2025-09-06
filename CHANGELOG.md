@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog and this project adheres to Semantic Versioning.
 
-## [Unreleased]
+## [1.1.0] - 2025-08-25
 
 ### Added
 - Store search by zip code endpoint: GET /api/v1/stores?zip_code=12345 (BACKND001)
@@ -19,7 +19,7 @@ The format is based on Keep a Changelog and this project adheres to Semantic Ver
 <!-- When releasing, move items above into a new section, e.g. `## [0.1.0] - YYYY-MM-DD` -->
 
 
-## [1.1.0] - 2025-08-25
+## [0.1.1] - 2025-08-25
 
 ### Added
 - Request specs for Shopping Lists (index, create, show, update, delete).
