@@ -16,10 +16,16 @@ The format is based on Keep a Changelog and this project adheres to Semantic Ver
 - Enhanced StoresController#index to support zip code filtering
 - Implemented ShoppingListsController#optimized_order method
 
-### Chores
-- TBD
-
 <!-- When releasing, move items above into a new section, e.g. `## [0.1.0] - YYYY-MM-DD` -->
+
+## [1.1.1] - 2025-08-26
+
+### Chores
+- Fixed duplication issue in `inherit_gem` configuration in .rubocop.yml
+- Fixed formatting errors detected by RuboCop:
+  - Removed trailing whitespace in multiple files
+  - Removed spaces inside array brackets
+  - Added missing final newlines in files
 
 ## [1.1.0] - 2025-08-25
 

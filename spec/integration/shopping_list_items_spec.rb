@@ -16,7 +16,7 @@ RSpec.describe 'Shopping List Items', type: :request do
           quantity: { type: :integer }
         }
       }
-      security [ Bearer: [] ]
+      security [Bearer: []]
       parameter name: :Authorization, in: :header, type: :string
 
       response '201', 'item added' do

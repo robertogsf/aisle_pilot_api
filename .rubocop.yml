@@ -1,3 +1,4 @@
+# Omakase Ruby styling for Rails
 inherit_gem:
   rubocop-rails-omakase: rubocop.yml
 
@@ -11,8 +12,6 @@ AllCops:
 
 Layout/LineLength:
   Max: 120
-# Omakase Ruby styling for Rails
-inherit_gem: { rubocop-rails-omakase: rubocop.yml }
 
 # Overwrite or add rules to create your own house style
 #

@@ -2,20 +2,21 @@ require 'swagger_helper'
 
 RSpec.describe 'Shopping Lists Optimized Order', type: :request do
   path '/api/v1/shopping_lists/{id}/optimized_order' do
-    parameter name: :id, in: :path, type: :string
+    parameter name: :id, in: :path, type: :integer, description: 'Shopping list ID'
 
     get 'Get optimized shopping order for a list' do
       tags 'ShoppingLists'
       produces 'application/json'
-      security [ bearer_auth: [] ]
+      security [bearer_auth: []]
 
-      response '200', 'optimized order returned' do
+      response '200', 'optimized shopping order' do
         let!(:user) { User.create!(email: 'optimized@example.com', password: 'password123', password_confirmation: 'password123') }
         let(:Authorization) do
           secret = Rails.application.credentials.jwt_secret.presence || ENV['JWT_SECRET']
           token = JWT.encode({ user_id: user.id }, secret, 'HS256')
           "Bearer #{token}"
         end
+
         let!(:store) { Store.create!(name: 'Test Store', location: 'Test Location') }
         let!(:product1) { Product.create!(name: 'Bananas', category: 'Produce', brand: 'Dole', image_url: 'test.jpg') }
         let!(:product2) { Product.create!(name: 'Milk', category: 'Dairy', brand: 'Great Value', image_url: 'test.jpg') }
