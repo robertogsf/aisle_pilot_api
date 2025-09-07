@@ -22,7 +22,7 @@ class Api::V1::ProductsController < ApplicationController
 
   # GET /api/v1/products/:id
   def show
-  product = Product.find_by(id: show_params[:id])
+      product = Product.find_by(id: show_params[:id])
     if product
       render json: product_response(product), status: :ok
     else

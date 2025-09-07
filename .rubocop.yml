@@ -8,6 +8,9 @@ AllCops:
   NewCops: enable
   Exclude:
     - 'bin/**/*'
+    - 'db/schema.rb'
+    - 'db/migrate/**/*'
+    - 'vendor/**/*'
     - 'tmp/**/*'
 
 Layout/LineLength:
