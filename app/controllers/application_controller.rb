@@ -22,7 +22,7 @@ class ApplicationController < ActionController::API
 
   # Centralized JWT secret with fallback for test/dev via ENV
   def jwt_secret
-    Rails.application.credentials.jwt_secret.presence || ENV["JWT_SECRET"]
+    Rails.application.credentials.jwt_secret.presence || ENV["JWT_SECRET"] || "your_super_secret_jwt_key_for_development_12345_changeme_in_production"
   end
 
   def encode_token(payload)
